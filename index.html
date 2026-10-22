@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katalog Produk - Editorial Luxury</title>
+    
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Menghubungkan CSS dari folder css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Main Window Canvas (Editorial Frame seperti referensi gambar) -->
+    <div class="window-canvas">
+        <!-- Site Header & Minimal Navigation -->
+        <header class="site-header">
+            <div class="header-container">
+                <div class="brand-wrapper">
+                    <button class="brand-menu-btn" title="Menu Navigasi">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="brand-info">
+                        <h1>URBAN ATELIER • PAW</h1>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html" class="active">Katalog Produk</a>
+                    <a href="form.html">Asisten Form UMKM</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Catalog Editorial Layout (2-Column Split) -->
+        <main class="catalog-layout">
+            <!-- Sidebar Kiri: Filter & Kontrol Editorial -->
+            <aside class="catalog-sidebar">
+                <div class="catalog-header">
+                    <h2>Katalog Produk</h2>
+                </div>
+
+                <!-- Tombol Load Data (ID Asli) -->
+                <div class="sidebar-action-box">
+                    <button id="btnLoadData" class="btn btn-outline" style="width: 100%;">
+                        <i class="fa-solid fa-arrow-down-long"></i>
+                        <span>Muat Data Produk</span>
+                    </button>
+                </div>
+
+                <!-- Status Notifikasi (ID Asli) -->
+                <div id="loadingStatus" class="status-msg hidden">
+                    <div class="spinner"></div>
+                    <span>Memuat koleksi produk...</span>
+                </div>
+                <div id="errorStatus" class="status-msg error-msg-box hidden"></div>
+
+                <!-- Filter Summary Bar -->
+                <div class="filter-summary-row">
+                    <span>Filters:</span>
+                    <div class="active-filter-tags">
+                        <span class="tag-removable" id="activeCategoryTag">All Collection</span>
+                        <span class="tag-removable">Curated Items</span>
+                    </div>
+                </div>
+
+                <!-- Price Range Indicator Mock (Sesuai Gambar Referensi) -->
+                <div class="price-slider-block">
+                    <div class="slider-label-row">
+                        <span>Price Range</span>
+                        <span id="priceRangeDisplay" style="color: var(--accent-tan); font-weight: 600;">$0 — $1,500+</span>
+                    </div>
+                    <div class="price-slider-track">
+                        <div class="price-slider-fill"></div>
+                        <div class="price-slider-handle handle-min"></div>
+                        <div class="price-slider-handle handle-max"></div>
+                    </div>
+                    <div class="price-slider-values">
+                        <span>$0</span>
+                        <span>$750</span>
+                        <span>$1,500+</span>
+                    </div>
+                </div>
+
+                <!-- Search Input Minimal -->
+                <div class="sidebar-search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Cari nama produk atau kategori...">
+                </div>
+
+                <!-- Category Checkbox-Style Filter List -->
+                <div class="category-filter-section">
+                    <div class="filter-group-title">
+                        <span>Category</span>
+                        <span style="font-size: 0.7rem; color: var(--text-muted); cursor: pointer;" id="resetCategoryBtn">Reset</span>
+                    </div>
+                    <div id="categoryFilters" class="category-checkbox-list">
+                        <!-- Diisi secara dinamis oleh js/index.js -->
+                        <div class="category-checkbox-item active" data-category="all">
+                            <span><span class="category-radio-icon"></span>Semua Kategori</span>
+                            <span style="font-size: 0.7rem; color: var(--text-muted);">ALL</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Sisi Kanan: Grid Produk Editorial -->
+            <section class="catalog-content">
+                <div class="catalog-content-header">
+                    <span class="results-count" id="productCounter">
+                        Klik <strong>"Muat Data Produk"</strong> untuk menampilkan data
+                    </span>
+
+                    <div class="sort-box">
+                        <span style="font-size: 0.78rem; color: var(--text-muted);">Sort by:</span>
+                        <select id="sortSelect" class="sort-select-minimal">
+                            <option value="default">Popularity</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="rating">Top Rated</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Skeleton Placeholder saat loading -->
+                <div id="skeletonLoader" class="skeleton-grid hidden">
+                    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line title"></div><div class="skeleton-line short"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line title"></div><div class="skeleton-line short"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line title"></div><div class="skeleton-line short"></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img"></div><div class="skeleton-line title"></div><div class="skeleton-line short"></div></div>
+                </div>
+
+                <!-- Wadah Grid Produk (ID Asli) -->
+                <div id="productList" class="product-grid">
+                    <!-- Produk dari Fetch API DummyJSON akan di-render di sini -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Site Footer Minimal -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <span>URBAN ATELIER • PAW</span>
+                <span>Vanilla JS • Fetch API • Minimalist Editorial Design</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="modalCloseBtn">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Konten modal detail produk via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Animasi Background JS Partikel Minimal -->
+    <script src="js/particles.js"></script>
+    <!-- Menghubungkan JS dari folder js -->
+    <script src="js/index.js"></script>
+</body>
+</html>

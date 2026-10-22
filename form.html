@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asisten Form UMKM - Editorial Luxury</title>
+    
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Menghubungkan CSS dari folder css -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Main Window Canvas (Editorial Frame) -->
+    <div class="window-canvas">
+        <!-- Site Header & Minimal Navigation -->
+        <header class="site-header">
+            <div class="header-container">
+                <div class="brand-wrapper">
+                    <button class="brand-menu-btn" title="Menu Navigasi">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="brand-info">
+                        <h1>URBAN ATELIER • PAW</h1>
+                    </div>
+                </div>
+
+                <nav class="nav-menu">
+                    <a href="index.html">Katalog Produk</a>
+                    <a href="form.html" class="active">Asisten Form UMKM</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Form & Editorial Preview Layout -->
+        <main class="form-layout-grid">
+            <!-- Kolom Kiri: Formulir Input -->
+            <section class="form-content-side">
+                <div class="form-header-box">
+                    <h2>Buat Caption Promosi</h2>
+                </div>
+
+                <form id="captionForm" novalidate>
+                    <!-- Input Nama Produk (ID Asli) -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="namaProduk">Nama Produk</label>
+                            <span class="char-counter" id="counterNama">0 / 3 Karakter min</span>
+                        </div>
+                        <input type="text" id="namaProduk" placeholder="Contoh: Kopi Mahkota 88" autocomplete="off">
+                        <small class="error-msg" id="errorNama"></small>
+                        
+                        <!-- Quick Fill Templates -->
+                        <div class="quick-fill-row">
+                            <span style="font-size: 0.72rem; color: var(--text-muted);">Quick Sample:</span>
+                            <span class="quick-tag" data-nama="Kopi Arabika Gayo Single Origin" data-keunggulan="Dipetik langsung dari lereng dataran tinggi Aceh dengan aroma floral khas dan aftertaste manis alami.">Kopi Gayo</span>
+                            <span class="quick-tag" data-nama="Keripik Tempe Renyah Gurih" data-keunggulan="Kedelai organik lokal pilihan dengan ramuan rempah warisan tanpa bahan pengawet.">Keripik Tempe</span>
+                            <span class="quick-tag" data-nama="Kemeja Linen Oversized" data-keunggulan="Serat linen premium breathable yang sejuk dan potongan santai bergaya kasual kontemporer.">Kemeja Linen</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Input Keunggulan Produk (ID Asli) -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="keunggulan">Keunggulan Produk</label>
+                            <span class="char-counter" id="counterKeunggulan">0 / 10 Karakter min</span>
+                        </div>
+                        <textarea id="keunggulan" rows="3" placeholder="Contoh: Terbuat dari biji kopi pilihan nusantara yang diproses dengan standar barista kelas dunia..."></textarea>
+                        <small class="error-msg" id="errorKeunggulan"></small>
+                    </div>
+
+                    <!-- Pilihan Tone / Gaya Bahasa -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label>Tone of Voice</label>
+                        </div>
+                        <div class="tone-selector">
+                            <div class="tone-card active" data-tone="luxury">
+                                <span class="tone-icon">✦</span>
+                                <span class="tone-title">Elegan & Mewah</span>
+                            </div>
+                            <div class="tone-card" data-tone="casual">
+                                <span class="tone-icon">☕</span>
+                                <span class="tone-title">Santai & Akrab</span>
+                            </div>
+                            <div class="tone-card" data-tone="promo">
+                                <span class="tone-icon">🏷️</span>
+                                <span class="tone-title">Promo Khusus</span>
+                            </div>
+                            <div class="tone-card" data-tone="story">
+                                <span class="tone-icon">📖</span>
+                                <span class="tone-title">Storytelling</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Submit (ID & Tag Asli) -->
+                    <div style="display: flex; gap: 0.65rem; align-items: center; margin-top: 1.5rem;">
+                        <button type="submit" class="btn" style="flex: 1;">
+                            <span>Generate Caption</span>
+                        </button>
+                        <button type="button" id="btnResetForm" class="btn btn-outline" style="padding: 0.75rem 1rem;" title="Reset Form">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Kolom Kanan: Pratinjau Editorial & Output -->
+            <aside class="preview-column">
+                <!-- Box Output Caption (ID Asli) -->
+                <div class="output-card-box">
+                    <div class="output-toolbar">
+                        <span class="output-toolbar-title">Hasil Copywriting</span>
+                        <button type="button" id="btnCopyCaption" class="btn-copy hidden">
+                            <span id="copyBtnText">Salin Teks</span>
+                        </button>
+                    </div>
+
+                    <div id="outputCaption" class="output-box hidden">
+                        <!-- Konten hasil form akan ditampilkan di sini -->
+                    </div>
+
+                    <div id="emptyCaptionPlaceholder" style="padding: 1.5rem 0.5rem; color: var(--text-muted); font-size: 0.82rem; text-align: center;">
+                        Lengkapi formulir di samping lalu tekan <strong>Generate Caption</strong> untuk melihat hasil teks promosi.
+                    </div>
+                </div>
+
+                <!-- Pratinjau Editorial Feed Mockup -->
+                <div class="mockup-preview">
+                    <div class="mockup-header">
+                        <div class="mockup-user">
+                            <div class="mockup-avatar">
+                                <i class="fa-solid fa-store"></i>
+                            </div>
+                            <div>
+                                <div class="mockup-username" id="mockupBrand">Atelier Studio</div>
+                                <div style="font-size: 0.68rem; color: var(--text-muted);">Curated Selection • Official</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-ellipsis" style="color: var(--text-muted); font-size: 0.8rem;"></i>
+                    </div>
+
+                    <div class="mockup-image">
+                        <img id="mockupImage" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="Preview Produk">
+                    </div>
+
+                    <div class="mockup-body">
+                        <div class="mockup-actions-bar">
+                            <div class="mockup-actions-left">
+                                <i class="fa-regular fa-heart"></i>
+                                <i class="fa-regular fa-comment"></i>
+                                <i class="fa-regular fa-paper-plane"></i>
+                            </div>
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+
+                        <div class="mockup-caption-text">
+                            <strong id="mockupAuthor">atelier.id</strong>
+                            <span id="mockupCaption">Pratinjau tampilan caption promosi produk Anda akan tampil di sini setelah di-generate...</span>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Site Footer Minimal -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <span>URBAN ATELIER • PAW</span>
+                <span>Vanilla JS • DOM Manipulation • Minimalist Editorial Design</span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Canvas Partikel Minimal -->
+    <script src="js/particles.js"></script>
+    <!-- Menghubungkan JS dari folder js -->
+    <script src="js/form.js"></script>
+</body>
+</html>
